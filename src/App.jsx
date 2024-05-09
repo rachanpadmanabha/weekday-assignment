@@ -24,17 +24,19 @@ const App = () => {
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const isSmallScreen = useMediaQuery("(max-width:768px)");
-  // State variables for filters
+
+  //filter useStaetes
   const [locationFilter, setLocationFilter] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
   const [salaryFilter, setSalaryFilter] = useState("");
   const [companyFilter, setCompanyFilter] = useState("");
 
+  //this function takes care of the aynchronous api call
   const fetchData = async () => {
     try {
       const { jdList, totalCount: fetchedTotalCount } = await fetchJobs(page);
       setJobs((prevJobs) => [...prevJobs, ...jdList]);
-      setPage((prevPage) => prevPage + 1);
+      setPage((prevPage) => prevPage + 1); //helps in InfiniteScroll increments page whenever fetch returns 200
       setHasMore(jobs.length + jdList.length < fetchedTotalCount);
       setError(null);
     } catch (error) {
@@ -44,8 +46,10 @@ const App = () => {
 
   useEffect(() => {
     fetchData();
-    return () => cancelFetchJobs();
+    return () => cancelFetchJobs(); //on mount need to call the api once
   }, []);
+
+  //this function chaecks for the salary range if a particular salary filter is selected
   const isSalaryInRange = (minSalary, maxSalary, minimum) => {
     if (minSalary === null || maxSalary === null || minimum === null) {
       return false;
@@ -53,7 +57,8 @@ const App = () => {
     const parsedMinimum = parseFloat(minimum);
     return minSalary >= parsedMinimum && maxSalary <= parsedMinimum + 10;
   };
-  console.log("salaryFilter", salaryFilter);
+
+  //we filterJobs dynamically whenever one or multiple filters are applied
   const filteredJobs = jobs.filter((job) => {
     if (roleFilter && job.jobRole.toLowerCase() !== roleFilter.toLowerCase()) {
       return false;
@@ -85,7 +90,7 @@ const App = () => {
     <div className="app">
       <Typography variant="h2">Job Listings</Typography>
 
-      <Grid
+      <Grid //filter container
         container
         spacing={2}
         alignItems="center"
@@ -97,7 +102,7 @@ const App = () => {
             <FormControl fullWidth>
               <InputLabel id="roles">Roles</InputLabel>
               <Select
-                labelid="roles"
+                labelid="roles" //roles filter
                 id="roles-id"
                 value={roleFilter}
                 label="Roles"
@@ -117,7 +122,7 @@ const App = () => {
         <Grid item>
           <TextField
             placeholder="Location"
-            value={locationFilter}
+            value={locationFilter} //location filter
             onChange={(e) => setLocationFilter(e.target.value)}
           />
         </Grid>
@@ -140,7 +145,7 @@ const App = () => {
               <InputLabel id="salaries">Minimum Base Pay</InputLabel>
               <Select
                 labelid="salaries"
-                id="salaries-id"
+                id="salaries-id" //salary filter
                 value={salaryFilter}
                 label="Minimum Base Pay"
                 onChange={(e) => setSalaryFilter(e.target.value)}
@@ -161,13 +166,13 @@ const App = () => {
           <TextField
             labelid="company-name"
             placeholder="Company Name"
-            value={companyFilter}
+            value={companyFilter} //company filter
             onChange={(e) => setCompanyFilter(e.target.value)}
           />
         </Grid>
       </Grid>
 
-      <InfiniteScroll
+      <InfiniteScroll //making use of a library called infinite scroll
         dataLength={filteredJobs.length}
         next={fetchData}
         hasMore={hasMore}
