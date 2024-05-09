@@ -3,7 +3,9 @@
 
 ## Description
 
-This project is a clone of a jobBoard of Weekday using their own dummy JobList Api. It is hosted on [Weekday Assignment Website](https://weekday-assignment.web.app/). You can also find the source code on [GitHub](https://github.com/rachanpadmanabha/weekday-assignment).
+This project is a clone of a jobBoard of Weekday using their own dummy JobList Api.
+It is hosted on [Weekday Assignment Website](https://weekday-assignment.web.app/).
+You can also find the source code on [GitHub](https://github.com/rachanpadmanabha/weekday-assignment).
 
 ## Table of Contents
 
