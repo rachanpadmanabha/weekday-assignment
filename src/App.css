@@ -6,6 +6,21 @@
 .job-wrapper {
   margin: 50px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three columns with equal width */
+  grid-template-columns: repeat(3, 1fr);
   gap: 80px;
+}
+
+/* Media query for tablets (768px width) */
+@media screen and (max-width: 1280px) {
+  .job-wrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .job-wrapper {
+    grid-template-columns: 1fr; /* Single column */
+    gap: 30px;
+  }
 }

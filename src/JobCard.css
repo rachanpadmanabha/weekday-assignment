@@ -87,12 +87,20 @@
 }
 
 .job-card .description {
-  color: #333; /* Ensure description text color is consistent */
+  color: #333;
   display: flex;
   text-align: left;
-  position: relative; /* Ensure position is relative for absolute positioning of blurred text */
+  position: relative;
 }
-
+@media screen and (max-width: 768px) {
+  .job-card .description {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 3.6em;
+    line-height: 1.2em;
+  }
+}
 .job-card .view-job {
   position: absolute;
   display: flex;
